@@ -1,3 +1,4 @@
-#editor directories
+# editor folders
 .idea/
 .vs/
+.vscode/

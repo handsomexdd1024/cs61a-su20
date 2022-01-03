@@ -13,9 +13,9 @@ def a_plus_abs_b(a, b):
     ['return h(a, b)']
     """
     if b >= 0:
-        h = a + b 
+        h = add
     else:
-        h = a - b 
+        h = sub
     return h(a, b)
 
 
@@ -50,9 +50,9 @@ def largest_factor(x):
     >>> largest_factor(13) # factor is 1 since 13 is prime
     1
     """
-    for i in range(2, x):
+    for i in range(2, x + 1):
         if x % i == 0 :
-            return x / i
+            return int(x / i)
 
 
 
@@ -98,13 +98,15 @@ def with_if_function():
     return if_function(cond(), true_func(), false_func())
 
 def cond():
-    "*** YOUR CODE HERE ***"
+    return 42 > 47
 
 def true_func():
-    "*** YOUR CODE HERE ***"
+    print("42")
+    return None
 
 def false_func():
-    "*** YOUR CODE HERE ***"
+    print("47")
+    return None
 
 
 def hailstone(x):
@@ -122,5 +124,15 @@ def hailstone(x):
     >>> a
     7
     """
-    "*** YOUR CODE HERE ***"
+    count = 1
+    print(int(x))
+    while x != 1:
+        if x % 2 == 0:
+            x = x / 2
+        else:
+            x = x * 3 + 1
+        print(int(x))
+        count += 1
+    return count
+
 
