@@ -154,5 +154,6 @@ def cycle(f1, f2, f3):
             else:
                 cur = compose1(f3, cur)
         return cur
+    
     return r
 
