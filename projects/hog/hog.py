@@ -124,29 +124,43 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
-    last0 = 0  # initialize
-    last1 = 0  # these variables record the score for last round
+    last_score_0 = 0  # initialize
+    last_score_1 = 0  # these variables record the score for last round
+    strategy_0 = 0
+    strategy_1 = 1
 
     def flag(x1, x2):
         return x1 < goal and x2 < goal
+
+    def check_feral_hogs(score, strategy):
+        if feral_hogs:
+            if abs(score - strategy) == 2:
+                return True
+            else:
+                return False
+        else:
+            return False
+    
     while flag(score0, score1):  # game continues
-        last0 = take_turn(strategy0(score0, score1), score1, dice)  # player0 plays
-        score0 += last0
+        # player0 play
+        strategy_0 = strategy0(score0, score1)
+        if check_feral_hogs(last_score_0, strategy_0):
+            score0 += 3
+        last_score_0 = take_turn(strategy_0, score1, dice)
+        score0 += last_score_0
         if is_swap(score0, score1):
-            score0, score1 = score1, score0
+            score0, score1 = score1, score0  #swap
+        # check
         if not flag(score0, score1):
             break
-        last1 = take_turn(strategy1(score1, score0), score0, dice)  # player1 plays
-        score1 += last1
+        # player1 play
+        strategy_1 = strategy1(score1, score0)
+        if check_feral_hogs(last_score_1, strategy_1):
+            score1 += 3
+        last_score_1 = take_turn(strategy_1, score0, dice)
+        score1 += last_score_1
         if is_swap(score1, score0):
-            score0, score1 = score1, score0
-    # END PROBLEM 5
-    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
-    # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
-        if feral_hogs:
-            
-    # END PROBLEM 6
+            score0, score1 = score1, score0  #swap
     return score0, score1
 
 
