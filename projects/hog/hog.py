@@ -47,6 +47,7 @@ def free_bacon(score):
     assert score < 100, 'The game should be over.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    return 10 - score % 10 + score // 10
     # END PROBLEM 2
 
 
@@ -65,6 +66,10 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert opponent_score < 100, 'The game should be over.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    if num_rolls == 0: # Free Bacon
+        return free_bacon(opponent_score)  # free bacon
+    else:
+        return roll_dice(num_rolls, dice)  # normal roll
     # END PROBLEM 3
 
 
@@ -74,6 +79,11 @@ def is_swap(player_score, opponent_score):
     """
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    k = (opponent_score // 10) % 10
+    if abs(player_score % 10 - opponent_score % 10) == k:
+        return True
+    else:
+        return False
     # END PROBLEM 4
 
 
@@ -114,10 +124,28 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    last0 = 0  # initialize
+    last1 = 0  # these variables record the score for last round
+
+    def flag(x1, x2):
+        return x1 < goal and x2 < goal
+    while flag(score0, score1):  # game continues
+        last0 = take_turn(strategy0(score0, score1), score1, dice)  # player0 plays
+        score0 += last0
+        if is_swap(score0, score1):
+            score0, score1 = score1, score0
+        if not flag(score0, score1):
+            break
+        last1 = take_turn(strategy1(score1, score0), score0, dice)  # player1 plays
+        score1 += last1
+        if is_swap(score1, score0):
+            score0, score1 = score1, score0
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
     # BEGIN PROBLEM 6
     "*** YOUR CODE HERE ***"
+        if feral_hogs:
+            
     # END PROBLEM 6
     return score0, score1
 
