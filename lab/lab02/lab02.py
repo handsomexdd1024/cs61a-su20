@@ -142,21 +142,17 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
-    def r(n):
+    def make_cycle(n):
         cur = lambda x: x
         k = 0
-        x1 = f1
-        x2 = f2
-        x3 = f3
         while k < n:
             k += 1
             if k % 3 == 1:
-                cur = compose1(x1, cur)
+                cur = compose1(f1, cur)
             elif k % 3 == 2:
-                cur = compose1(x2, cur)
+                cur = compose1(f2, cur)
             else:
-                cur = compose1(x3, cur)
+                cur = compose1(f3, cur)
         return cur
-    
-    return r
+    return make_cycle
 
